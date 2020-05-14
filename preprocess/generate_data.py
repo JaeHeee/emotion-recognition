@@ -90,4 +90,4 @@ if __name__ == "__main__":
 
 
 ###data 폴더안에, FER2013Test,FER2013Valid,FER2013Train폴더 만들고, 각 폴더별로 0~9 감정폴더 만들어놓고 파일 실행
-###python generate_data.py -d ./data -fer ./fer2013.csv -ferplus ./fer2013new.csv
+###python generate_data.py -d ../data -fer ../data./fer2013.csv -ferplus ../data./fer2013new.csv

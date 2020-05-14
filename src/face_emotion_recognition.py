@@ -4,8 +4,9 @@ import cv2
 from keras.models import load_model
 import numpy as np
 
+
 detection_model_path = 'haarcascade_frontalface_default.xml'
-emotion_model_path = 'model_emotion_plelu_0.03_30_gray_new.h5'
+emotion_model_path = '..modle/model_emotion_plelu_0.03_30_gray_new.h5'
 
 face_detection = cv2.CascadeClassifier(detection_model_path)
 emotion_classifier = load_model(emotion_model_path, compile=False)
