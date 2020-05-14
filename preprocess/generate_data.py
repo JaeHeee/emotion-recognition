@@ -5,14 +5,16 @@ import numpy as np
 from itertools import islice
 from PIL import Image
 
-folder_names = {'Training'   : 'FER2013Train',
-                'PublicTest' : 'FER2013Valid',
+folder_names = {'Training': 'FER2013Train',
+                'PublicTest': 'FER2013Valid',
                 'PrivateTest': 'FER2013Test'}
+
 
 def str_to_image(image_blob):
     image_string = image_blob.split(' ')
     image_data = np.asarray(image_string, dtype=np.uint8).reshape(48,48)
     return Image.fromarray(image_data)
+
 
 def main(base_folder, fer_path, ferplus_path):
     print("Start")
@@ -66,6 +68,7 @@ def main(base_folder, fer_path, ferplus_path):
 
     print("Complete")
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-d",
@@ -89,5 +92,5 @@ if __name__ == "__main__":
     main(args.base_folder, args.fer_path, args.ferplus_path)
 
 
-###data 폴더안에, FER2013Test,FER2013Valid,FER2013Train폴더 만들고, 각 폴더별로 0~9 감정폴더 만들어놓고 파일 실행
+###data 폴더안에, FER2013Test,FER2013Valid,FER2013Train폴더
 ###python generate_data.py -d ../data -fer ../data./fer2013.csv -ferplus ../data./fer2013new.csv
