@@ -5,12 +5,13 @@ from keras.models import load_model
 import numpy as np
 
 
+
 detection_model_path = 'haarcascade_frontalface_default.xml'
-emotion_model_path = '..modle/model_emotion_plelu_0.03_30_gray_new.h5'
+emotion_model_path = '../model/emotion_keras.h5'
 
 face_detection = cv2.CascadeClassifier(detection_model_path)
 emotion_classifier = load_model(emotion_model_path, compile=False)
-EMOTIONS = ["Angry", "Happy","Neutral" ,"Sad", "Surprise"]
+EMOTIONS = ["Angry", "Happy", "Neutral", "Sad", "Surprise"]
 
 cv2.namedWindow('face')
 camera = cv2.VideoCapture(0)
@@ -19,15 +20,14 @@ while True:
     frame = imutils.resize(frame,width=800)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_detection.detectMultiScale(gray,scaleFactor=1.07,minNeighbors=5,
-    minSize=(64,64),flags=cv2.CASCADE_SCALE_IMAGE)
+    minSize=(48,48),flags=cv2.CASCADE_SCALE_IMAGE)
 
     frameClone = frame.copy()
     if len(faces) > 0:
-        faces = sorted(faces, reverse=True,
-        key=lambda x: (x[2] - x[0]) * (x[3] - x[1]))[0]
+        faces = sorted(faces, reverse=True, key=lambda x: (x[2] - x[0]) * (x[3] - x[1]))[0]
         (fX, fY, fW, fH) = faces
         roi = gray[fY:fY + fH, fX:fX + fW]
-        roi = cv2.resize(roi, (64, 64))
+        roi = cv2.resize(roi, (48, 48))
         roi = roi.astype("float") / 255.0
         roi = img_to_array(roi)
         roi = np.expand_dims(roi, axis=0)
@@ -39,7 +39,7 @@ while True:
         continue
 
     for (i, (emotion, prob)) in enumerate(zip(EMOTIONS, preds)):
-                text = "{}: {:.2f}%".format(emotion, prob * 100)
+                text = "{}: {:.2f}%".format(emotion, prob * 100 )
 
                 w = int(prob * 300)
                 cv2.rectangle(frameClone, (7, (i * 35) + 5),
@@ -47,6 +47,7 @@ while True:
                 cv2.putText(frameClone, text, (10, (i * 35) + 23),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.45,
                 (255, 255, 255), 2)
+
                 cv2.putText(frameClone, label, (fX, fY - 10),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255, 0, 0), 2)
                 cv2.rectangle(frameClone, (fX, fY), (fX + fW, fY + fH),
