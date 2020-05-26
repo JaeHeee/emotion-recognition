@@ -30,3 +30,4 @@ python generate_data.py -d <basefolder> -fer <fer2013.csv path> -ferplus <fer201
 
 Deep Learnig Model
 ------------------
+https://github.com/gitshanks/fer2013 이곳의 모델을 사용하였습니다.
